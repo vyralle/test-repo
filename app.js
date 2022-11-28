@@ -8,10 +8,12 @@ var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 
 const MongoClient = require('mongodb').MongoClient;
 
-
-const CONNECTION_URL = "mongodb+srv://itsmejaong:Study1ng@portfolio-app.zba91ak.mongodb.net/?retryWrites=true&w=majority";
-const DATABASE_NAME = "newdb";
+const CONNECTION_URL = "mongodb+srv://abbyychia:test@abigail.rwnzu.mongodb.net/?retryWrites=true&w=majority";
+const DATABASE_NAME = "Abigail";
+//const CONNECTION_URL = "mongodb+srv://itsmejaong:Study1ng@portfolio-app.zba91ak.mongodb.net/?retryWrites=true&w=majority";
+//const DATABASE_NAME = "newdb";
 var database, collection;
+const client = new MongoClient(CONNECTION_URL);
 
 app.set("view engine", "ejs");
 
@@ -19,13 +21,32 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded ({extended:false}));
 app.use(express.urlencoded({extended: true}));
 
-MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
-    if (error) throw error;
-    database = client.db(DATABASE_NAME);
-    collection = database.collection("newcollection");
-    console.log("MongoDB connected");
+async function run() {
+    try {
+        const database = client.db(DATABASE_NAME);
+      const haiku = database.collection("haiku");
+      // create a document to insert
+      const doc = {
+        title: "Record of a Shriveled Datum",
+        content: "No bytes, no problem. Just insert a document, in MongoDB",
+      }
+      const result = await haiku.insertOne(doc);
+      console.log(`A document was inserted with the _id: ${result.insertedId}`);
+    } finally {
+      await client.close();
+    }
+  }
+  run().catch(console.dir);
+  
 
-});
+
+//MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
+//    if (error) throw error;
+//    database = client.db(DATABASE_NAME);
+//    collection = database.collection("newcollection");
+//    console.log("MongoDB connected");
+
+//});
 
 app.get("/", function(req, res){
     res.render('home');
