@@ -10,6 +10,12 @@ const CONNECTION_URL = "mongodb+srv://itsmejaong:Study1ng@portfolio-app.zba91ak.
 const DATABASE_NAME = "newdb";
 var database, collection;
 
+app.set("view engine", "ejs");
+
+app.use(cookieParser());
+app.use(bodyParser.urlencoded ({extended:false}));
+app.use(express.urlencoded({extended: true}));
+
 MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
     if (error) throw error;
     database = client.db(DATABASE_NAME);
@@ -20,12 +26,6 @@ MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) =
         console.log('This app is running on port 3000')
       });
 });
-
-app.set("view engine", "ejs");
-
-app.use(cookieParser());
-app.use(bodyParser.urlencoded ({extended:false}));
-app.use(express.urlencoded({extended: true}));
 
 app.get("/", function(req, res){
     res.render('home');
