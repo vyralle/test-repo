@@ -19,7 +19,31 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded ({extended:false}));
 app.use(express.urlencoded({extended: true}));
 
-MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }, (error, client) => {
+
+async function connectMongodb(){
+    /**
+     * Connection URI. Update <username>, <password>, and <your-cluster-url> to reflect your cluster.
+     * See https://docs.mongodb.com/ecosystem/drivers/node/ for more details
+     */
+    const uri = "mongodb+srv://itsmejaong:Study1ng@portfolio-app.zba91ak.mongodb.net/?retryWrites=true&w=majority";
+
+
+    const client = new MongoClient(uri);
+
+    try {
+        // Connect to the MongoDB cluster
+        await client.connect();
+
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+}
+
+connectMongodb().catch(console.error);
+
+MongoClient.connect(CONNECTION_URL, (error, client) => {
     if (error) throw error;
     database = client.db(DATABASE_NAME);
     collection = database.collection("newcollection");
