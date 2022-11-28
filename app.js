@@ -8,10 +8,9 @@ var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 
 const MongoClient = require('mongodb').MongoClient;
 
-const CONNECTION_URL = "mongodb+srv://abbyychia:test@abigail.rwnzu.mongodb.net/?retryWrites=true&w=majority";
-const DATABASE_NAME = "Abigail";
-//const CONNECTION_URL = "mongodb+srv://itsmejaong:Study1ng@portfolio-app.zba91ak.mongodb.net/?retryWrites=true&w=majority";
-//const DATABASE_NAME = "newdb";
+
+const CONNECTION_URL = "mongodb+srv://itsmejaong:Study1ng@portfolio-app.zba91ak.mongodb.net/?retryWrites=true&w=majority";
+const DATABASE_NAME = "newdb";
 var database, collection;
 
 app.set("view engine", "ejs");
@@ -36,7 +35,7 @@ app.post("/", function(req, res) {
     collection.insertOne(req.body, (err, result) => {
         if (err) return console.log(err);
         console.log('saved to database');
-        
+    });
         function formv3(){
             function formv3(){
                 // Create the new request 
@@ -89,8 +88,7 @@ app.post("/", function(req, res) {
         
          formv3();
         }
-    })
-});
+    });
 
 app.listen(4000, () => {
     console.log('This app is running on port 3000')
