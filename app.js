@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded ({extended:false}));
 app.use(express.urlencoded({extended: true}));
 
-MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
+MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }, (error, client) => {
     if (error) throw error;
     database = client.db(DATABASE_NAME);
     collection = database.collection("newcollection");
