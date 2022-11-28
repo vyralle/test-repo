@@ -39,7 +39,6 @@ app.post("/", function(req, res) {
     collection.insertOne(req.body, (err, result) => {
         if (err) return console.log(err);
         console.log('saved to database');
-        res.redirect('/')
     });
 
         function formv3() {
@@ -92,6 +91,7 @@ app.post("/", function(req, res) {
          }
         
          formv3();
+         res.redirect('/');
         });
 
 
