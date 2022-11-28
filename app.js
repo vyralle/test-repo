@@ -6,37 +6,40 @@ const app = express();
 
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 
-const MongoClient = require('mongodb').MongoClient;
+//const MongoClient = require('mongodb').MongoClient;
 
-const CONNECTION_URL = "mongodb+srv://abbyychia:test@abigail.rwnzu.mongodb.net/?retryWrites=true&w=majority";
-const DATABASE_NAME = "Abigail";
+//const CONNECTION_URL = "mongodb+srv://abbyychia:test@abigail.rwnzu.mongodb.net/?retryWrites=true&w=majority";
+//const DATABASE_NAME = "Abigail";
 //const CONNECTION_URL = "mongodb+srv://itsmejaong:Study1ng@portfolio-app.zba91ak.mongodb.net/?retryWrites=true&w=majority";
 //const DATABASE_NAME = "newdb";
-var database, collection;
-const client = new MongoClient(CONNECTION_URL);
+//var database, collection;
 
 app.set("view engine", "ejs");
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded ({extended:false}));
 app.use(express.urlencoded({extended: true}));
-
+const { MongoClient } = require("mongodb");
+// Connection URI
+const uri =
+  "mongodb+srv://abbyychia:test@abigail.rwnzu.mongodb.net/?maxPoolSize=20&w=majority";
+// Create a new MongoClient
+const client = new MongoClient(uri);
 async function run() {
-    try {
-        const database = client.db(DATABASE_NAME);
-      const haiku = database.collection("haiku");
-      // create a document to insert
-      const doc = {
-        title: "Record of a Shriveled Datum",
-        content: "No bytes, no problem. Just insert a document, in MongoDB",
-      }
-      const result = await haiku.insertOne(doc);
-      console.log(`A document was inserted with the _id: ${result.insertedId}`);
-    } finally {
-      await client.close();
-    }
+  try {
+    // Connect the client to the server (optional starting in v4.7)
+    await client.connect();
+    // Establish and verify connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Connected successfully to server");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
   }
-  run().catch(console.dir);
+}
+run().catch(console.dir);
+
+
   
 
 
