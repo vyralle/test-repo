@@ -22,9 +22,6 @@ MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) =
     collection = database.collection("newcollection");
     console.log("MongoDB connected");
 
-    app.listen(4000, () => {
-        console.log('This app is running on port 3000')
-      });
 });
 
 app.get("/", function(req, res){
@@ -91,5 +88,7 @@ app.post("/", function(req, res) {
     })
 });
 
-
+app.listen(4000, () => {
+    console.log('This app is running on port 3000')
+  });
    
