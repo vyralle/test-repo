@@ -6,57 +6,40 @@ const app = express();
 
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 
-//const MongoClient = require('mongodb').MongoClient;
+const MongoClient = require('mongodb').MongoClient;
 
-//const CONNECTION_URL = "mongodb+srv://abbyychia:test@abigail.rwnzu.mongodb.net/?retryWrites=true&w=majority";
-//const DATABASE_NAME = "Abigail";
+const CONNECTION_URL = "mongodb+srv://abbyychia:test@abigail.rwnzu.mongodb.net/?retryWrites=true&w=majority";
+const DATABASE_NAME = "Abigail";
 //const CONNECTION_URL = "mongodb+srv://itsmejaong:Study1ng@portfolio-app.zba91ak.mongodb.net/?retryWrites=true&w=majority";
 //const DATABASE_NAME = "newdb";
-//var database, collection;
+var database, collection;
 
 app.set("view engine", "ejs");
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded ({extended:false}));
 app.use(express.urlencoded({extended: true}));
-const { MongoClient } = require("mongodb");
-// Connection URI
-const uri =
-  "mongodb+srv://abbyychia:test@abigail.rwnzu.mongodb.net/?maxPoolSize=20&w=majority";
-// Create a new MongoClient
-const client = new MongoClient(uri);
-async function run() {
-  try {
-    // Connect the client to the server (optional starting in v4.7)
-    await client.connect();
-    // Establish and verify connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Connected successfully to server");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
-
 
   
 
 
-//MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
-//    if (error) throw error;
-//    database = client.db(DATABASE_NAME);
-//    collection = database.collection("newcollection");
-//    console.log("MongoDB connected");
+MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
+    if (error) throw error;
+    database = client.db(DATABASE_NAME);
+    collection = database.collection("newcollection");
+    console.log("MongoDB connected");
+app.listen(4000, () => {
+    console.log('This app is running on port 3000')
+  });
 
-//});
+});
 
 app.get("/", function(req, res){
     res.render('home');
 });
 
 app.post("/", function(req, res) {
-    collection.create(req.body, (err, result) => {
+    collection.insertOne(req.body, (err, result) => {
         if (err) return console.log(err);
         console.log('saved to database');
     });
@@ -114,7 +97,5 @@ app.post("/", function(req, res) {
         }
     });
 
-app.listen(4000, () => {
-    console.log('This app is running on port 3000')
-  });
+
    
