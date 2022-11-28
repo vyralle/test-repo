@@ -35,6 +35,10 @@ app.get("/", function(req, res){
     res.render('home');
 });
 
+app.get("/about", function(req, res){
+    res.render('about');
+  });
+
 app.post("/", function(req, res) {
     collection.insertOne(req.body, (err, result) => {
         if (err) return console.log(err);
@@ -66,6 +70,7 @@ app.post("/", function(req, res) {
             }
             
             var final_data = JSON.stringify(data)
+            console.log(final_data);
             
             
         xhr.open('POST', url);
@@ -91,6 +96,8 @@ app.post("/", function(req, res) {
          }
         
          formv3();
+         console.log(req.cookies.hubspotutk);
+         
          res.redirect('/');
         });
 
