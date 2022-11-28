@@ -43,15 +43,15 @@ app.post("/", function(req, res) {
         if (err) return console.log(err);
         console.log('saved to database');
     });
-        function formv3(){
-            function formv3(){
-                // Create the new request 
-                var xhr = new XMLHttpRequest();
-                var url = 'https://api.hsforms.com/submissions/v3/integration/submit/9059838/77c8fef7-52ad-45b0-9e13-c0b50357c441'
+
+        function formv3() {
+            // Create the new request 
+            var xhr = new XMLHttpRequest();
+            var url = 'https://api.hsforms.com/submissions/v3/integration/submit/9059838/77c8fef7-52ad-45b0-9e13-c0b50357c441'
                 
-                // Example request JSON:
-                var data = {
-                  "fields": [
+            // Example request JSON:
+            var data = {
+                "fields": [
                     {
                       "name": "email",
                       "value": req.body.email
@@ -60,32 +60,32 @@ app.post("/", function(req, res) {
                       "name": "firstname",
                       "value": req.body.firstname
                     }
-                  ],
+                ],
                   "context": {
                     "hutk": req.cookies.hubspotutk,
                     "pageUri": "http://www.portfolio.com/contact",
                     "pageName": "Portfolio contact me"
                   }
-                }
+            }
             
-                var final_data = JSON.stringify(data)
+            var final_data = JSON.stringify(data)
             
             
-            xhr.open('POST', url);
+        xhr.open('POST', url);
             // Sets the value of the 'Content-Type' HTTP request headers to 'application/json'
-            xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Content-Type', 'application/json');
         
-            xhr.onreadystatechange = function() {
-                if(xhr.readyState == 4 && xhr.status == 200) { 
-                    console.log(xhr.responseText); // Returns a 200 response if the submission is successful.
-                } else if (xhr.readyState == 4 && xhr.status == 400){ 
-                    console.log(xhr.responseText); // Returns a 400 error the submission is rejected.          
-                } else if (xhr.readyState == 4 && xhr.status == 403){ 
-                    console.log(xhr.responseText); // Returns a 403 error if the portal isn't allowed to post submissions.           
-                } else if (xhr.readyState == 4 && xhr.status == 404){ 
-                    console.log(xhr.responseText); //Returns a 404 error if the formGuid isn't found     
-                }
-               }
+        xhr.onreadystatechange = function() {
+            if(xhr.readyState == 4 && xhr.status == 200) { 
+                console.log(xhr.responseText); // Returns a 200 response if the submission is successful.
+            } else if (xhr.readyState == 4 && xhr.status == 400){ 
+                console.log(xhr.responseText); // Returns a 400 error the submission is rejected.          
+            } else if (xhr.readyState == 4 && xhr.status == 403){ 
+                console.log(xhr.responseText); // Returns a 403 error if the portal isn't allowed to post submissions.           
+            } else if (xhr.readyState == 4 && xhr.status == 404){ 
+                console.log(xhr.responseText); //Returns a 404 error if the formGuid isn't found     
+            }
+       }
         
         
             // Sends the request 
@@ -94,8 +94,7 @@ app.post("/", function(req, res) {
          }
         
          formv3();
-        }
-    });
+        });
 
 
    
